@@ -1,0 +1,40 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+  </PropertyGroup>
+
+	<ItemGroup>
+		<Reference Include="R2API">
+			<HintPath>..\..\R2API\R2API\bin\Debug\netstandard2.0\R2API.dll</HintPath>
+			<Private>false</Private>
+		</Reference>
+	  <Reference Include="Assembly-CSharp">
+	    <HintPath>..\libs\Assembly-CSharp.dll</HintPath>
+	    <Private>false</Private>
+	  </Reference>
+	  <Reference Include="BepInEx">
+	    <HintPath>..\libs\BepInEx.dll</HintPath>
+			<Private>false</Private>
+		</Reference>
+	  <Reference Include="UnityEngine.CoreModule">
+	    <HintPath>..\libs\UnityEngine.CoreModule.dll</HintPath>
+		<Private>false</Private>
+		</Reference>
+		<Reference Include="UnityEngine.Networking">
+			<HintPath>..\libs\UnityEngine.Networking.dll</HintPath>
+			<Private>false</Private>		</Reference>
+		<Reference Include="UnityEngine.UI">
+			<HintPath>..\libs\UnityEngine.UI.dll</HintPath>
+			<Private>false</Private>
+		</Reference>
+		<Reference Include="UnityEngine">
+			<HintPath>..\libs\UnityEngine.dll</HintPath>
+			<Private>false</Private>
+		</Reference>
+	</ItemGroup>
+
+	<Target Name="PostBuild" AfterTargets="PostBuildEvent">
+		<Exec Command="copy /Y &quot;$(TargetDir)$(ProjectName).dll&quot; &quot;D:\Games\SteamLibrary\steamapps\common\Risk of Rain 2\BepInEx\plugins\$(ProjectName).dll&quot;&#xD;&#xA;" />
+	</Target>
+</Project>
