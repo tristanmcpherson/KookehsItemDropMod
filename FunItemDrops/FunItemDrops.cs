@@ -74,19 +74,18 @@ namespace FunItemDrops
 
 		public void Update()
 		{
-			CheckDropItem(KeyCode.F2, ItemDropAPI.GetDefaultDropList(ItemTier.Tier1).Select(x => new PickupIndex(x)).ToList());
-			CheckDropItem(KeyCode.F3, ItemDropAPI.GetDefaultDropList(ItemTier.Tier2).Select(x => new PickupIndex(x)).ToList());
-			CheckDropItem(KeyCode.F4, ItemDropAPI.GetDefaultDropList(ItemTier.Tier3).Select(x => new PickupIndex(x)).ToList());
-
-			CheckDropItem(KeyCode.F5, ItemDropAPI.GetDefaultEquipmentDropList().Select(x => new PickupIndex(x)).ToList());
-
+			CheckDropItem(KeyCode.F2, new Lazy<List<PickupIndex>>(() => ItemDropAPI.GetDefaultDropList(ItemTier.Tier1).Select(x => new PickupIndex(x)).ToList()));
+			CheckDropItem(KeyCode.F3, new Lazy<List<PickupIndex>>(() => ItemDropAPI.GetDefaultDropList(ItemTier.Tier2).Select(x => new PickupIndex(x)).ToList()));
+			CheckDropItem(KeyCode.F4, new Lazy<List<PickupIndex>>(() => ItemDropAPI.GetDefaultDropList(ItemTier.Tier3).Select(x => new PickupIndex(x)).ToList()));
+			CheckDropItem(KeyCode.F5, new Lazy<List<PickupIndex>>(() => ItemDropAPI.GetDefaultEquipmentDropList().Select(x => new PickupIndex(x)).ToList()));
 		}
 
-		private static void CheckDropItem(KeyCode keyCode, List<PickupIndex> items) {
+		private static void CheckDropItem(KeyCode keyCode, Lazy<List<PickupIndex>> items) {
+
 			if (!Input.GetKeyDown(keyCode) || !NetworkServer.active)
 				return;
 			//We grab a list of all available Tier 3 drops:
-			var dropList = items;
+			var dropList = items.Value;
 
 			//Randomly get the next item:
 			var nextItem = Run.instance.treasureRng.RangeInt(0, dropList.Count);

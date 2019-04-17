@@ -1,0 +1,9 @@
+﻿{
+	"name": "KookehsDropItem BepInEx",
+	"version_number": "1.0.0",
+	"website_url": "https://github.com/tristanmcpherson/KookehsItemDropMod",
+	"description": "Kookeh's original DropItemMod ported to BepInEx and R2API, the BepInEx required for this is available at: http://bepisbuilds.dyn.mk/builds/bepinex_ror2_pack/. Requires BepInExPack_9584930_5.0.0.0_b20.zip",
+	"dependencies": [
+		"bbepis-BepInExPack-latest"
+	]
+}
