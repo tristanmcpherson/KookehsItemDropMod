@@ -25,11 +25,8 @@ namespace DropItems
 			DontDestroyOnLoad(RootObject);
 			DropItemHandler = RootObject.AddComponent<DropItemHandler>();
 
-			//var equipmentIndex = typeof(EquipmentSlot).GetField("equipmentIndex", BindingFlags.NonPublic | BindingFlags.Instance);
 			var itemIndex = typeof(ItemIcon).GetField("itemIndex", BindingFlags.NonPublic | BindingFlags.Instance);
 			var inventory = typeof(ItemInventoryDisplay).GetField("inventory", BindingFlags.NonPublic | BindingFlags.Instance);
-			//var equipmentTargetInventory =
-			//	typeof(EquipmentIcon).GetField("targetInventory", BindingFlags.NonPublic | BindingFlags.Instance);
 
 			InventoryAPI.OnItemIconAdded += (itemIcon) => {
 				if (itemIcon.GetComponent<DropItemHandler>() == null) 
