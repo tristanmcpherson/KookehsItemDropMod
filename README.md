@@ -1,8 +1,8 @@
 # KookehsItemDropMod
 
-## REQUIRES AN UNRELEASED VERSION OF BepInExPack
+Kookeh's original DropItemMod ported to BepInEx and R2API!
 
-### Kookeh's original DropItemMod ported to BepInEx and R2API!
+## REQUIRES AN UNRELEASED VERSION OF BepInExPack
 
 Allows the host to drop their own items or items out of the inventories of other players in order to trade items, etc.
 
