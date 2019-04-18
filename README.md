@@ -13,7 +13,8 @@ Requires BepInExPack_a41001c_5.0.0.0_b24 or newer
 ### Future updates:
 Allow players to only drop items out of their own inventories
 
+Ignore my crazy version numbers
 ### Changelog:
-- 1.1.0 - Readme update
-- 1.2.0 - Readme update
 - 1.3.1 - Readme update :(
+- 1.2.0 - Readme update
+- 1.1.0 - Readme update
