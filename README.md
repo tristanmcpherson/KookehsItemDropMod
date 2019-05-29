@@ -1,20 +1,14 @@
-# KookehsItemDropMod
+### Kookeh's original DropItemMod ported to BepInEx and R2API!
 
-Kookeh's original DropItemMod ported to BepInEx and R2API!
+Allows players to drop their own items out of their inventories to trade with friends / throw away items!
+(For original host only functionality download a 1.x version)
 
-Allows the host to drop their own items or items out of the inventories of other players in order to trade items, etc.
+### Requirements:
 
-## REQUIRES AN UNRELEASED VERSION OF BepInExPack
-Found [here](https://builds.bepis.io/bepinex_ror2_pack)!
+- \>= R2API 2.0.8
+- \>= MiniRpcLib 0.0.1
+- \>= BepInExPack 2.0.0
 
-Requires BepInExPack_a41001c_5.0.0.0_b24 or newer
-
-
-### Future updates:
-Allow players to only drop items out of their own inventories
-
-Ignore my crazy version numbers
 ### Changelog:
-- 1.3.1 - Readme update :(
-- 1.2.0 - Readme update
-- 1.1.0 - Readme update
+- 1.x - Readme update
+- 2.0.0 - Complete remake
