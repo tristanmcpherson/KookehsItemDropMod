@@ -5,6 +5,12 @@
   </PropertyGroup>
 
 	<ItemGroup>
+		<Reference Include="MiniRpcLib">
+		  <HintPath>..\..\..\Users\Tristan\Downloads\MiniRpcLib.dll</HintPath>
+		</Reference>
+		<Reference Include="MMHOOK_Assembly-CSharp">
+		  <HintPath>..\..\R2API\R2API\bin\Debug\netstandard2.0\MMHOOK_Assembly-CSharp.dll</HintPath>
+		</Reference>
 		<Reference Include="R2API">
 			<HintPath>..\..\R2API\R2API\bin\Debug\netstandard2.0\R2API.dll</HintPath>
 			<Private>false</Private>

@@ -1,9 +1,11 @@
 ﻿{
-	"name": "KookehsDropItem BepInEx",
-	"version_number": "1.0.0",
+	"name": "KookehsDropItem_BepInEx",
+	"version_number": "2.0.0",
 	"website_url": "https://github.com/tristanmcpherson/KookehsItemDropMod",
 	"description": "Kookeh's Drop Item Mod ported to BepInEx and R2API",
 	"dependencies": [
-		"bbepis-BepInExPack-latest"
+		"bbepis-BepInExPack-2.0.0",
+		"tristanmcpherson-R2API-2.0.8",
+		"wildbook-MiniRpcLib-0.0.1"
 	]
 }
