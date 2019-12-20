@@ -11,6 +11,7 @@ namespace DropItems
 {
 	[BepInDependency("com.bepis.r2api")]
 	[BepInPlugin(ModGuid, ModName, ModVersion)]
+	[R2APISubmoduleDependency("InventoryAPI")]
 	public class KookehsDropItemMod : BaseUnityPlugin
 	{
 		public static GameObject RootObject { get; set; }
