@@ -1,13 +1,10 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
-	<PropertyGroup>
-		<TargetFramework>netstandard2.0</TargetFramework>
-	</PropertyGroup>
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+  </PropertyGroup>
 
 	<ItemGroup>
-		<Reference Include="MMHOOK_Assembly-CSharp">
-		  <HintPath>..\..\R2API\R2API\bin\Debug\netstandard2.0\MMHOOK_Assembly-CSharp.dll</HintPath>
-		</Reference>
 		<Reference Include="R2API">
 			<HintPath>..\..\R2API\R2API\bin\Debug\netstandard2.0\R2API.dll</HintPath>
 			<Private>false</Private>
@@ -36,6 +33,27 @@
 			<HintPath>..\libs\UnityEngine.dll</HintPath>
 			<Private>false</Private>
 		</Reference>
+		<Reference Include="MMHOOK_Assembly-CSharp">
+			<HintPath>..\libs\MMHOOK_Assembly-CSharp.dll</HintPath>
+			<Private>false</Private>
+		</Reference>
+		<Reference Include="MonoMod.Utils">
+			<HintPath>..\libs\MonoMod.Utils.dll</HintPath>
+			<Private>false</Private>
+		</Reference>
+		<Reference Include="Mono.Cecil">
+			<HintPath>..\libs\Mono.Cecil.dll</HintPath>
+			<Private>false</Private>
+		</Reference>
+	</ItemGroup>
+
+	<ItemGroup>
+		<None Update="manifest.json">
+			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		</None>
+		<None Update="README.md">
+			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		</None>
 	</ItemGroup>
 
 	<Target Name="PostBuild" AfterTargets="PostBuildEvent">
