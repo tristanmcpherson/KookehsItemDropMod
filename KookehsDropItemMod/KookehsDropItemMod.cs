@@ -18,7 +18,7 @@ namespace DropItems
 
 		private const string ModGuid = "KookehsDropItemMod";
 		private const string ModName = "Kookeh's Drop Item Mod";
-		private const string ModVersion = "2.0.0";
+		private const string ModVersion = "2.0.2";
 
 		public static IRpcAction<DropItemMessage> DropItemCommand { get; set; }
 
@@ -38,8 +38,8 @@ namespace DropItems
 				var charTransform = body.GetFieldValue<Transform>("transform");
 
 				var pickupIndex = dropItemMessage.IsItem
-					? new PickupIndex(dropItemMessage.ItemIndex) 
-					: new PickupIndex(dropItemMessage.EquipmentIndex);
+					? PickupCatalog.FindPickupIndex(dropItemMessage.ItemIndex) 
+					: PickupCatalog.FindPickupIndex(dropItemMessage.EquipmentIndex);
 
 				DropItemHandler.DropItem(charTransform, inventory, pickupIndex);
 				DropItemHandler.CreateNotification(body, charTransform, pickupIndex);

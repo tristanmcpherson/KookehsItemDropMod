@@ -47,8 +47,8 @@ namespace DropItems
 				var charTransform = characterBody.GetFieldValue<Transform>("transform");
 
 				var pickupIndex = EquipmentIcon 
-					? new PickupIndex(inventory.GetEquipmentIndex()) 
-					: new PickupIndex(GetItemIndex());
+					? PickupCatalog.FindPickupIndex(inventory.GetEquipmentIndex()) 
+					: PickupCatalog.FindPickupIndex(GetItemIndex());
 
 				DropItem(charTransform, inventory, pickupIndex);
 				CreateNotification(characterBody, charTransform, pickupIndex);
@@ -57,9 +57,9 @@ namespace DropItems
 
 		public static void DropItem(Transform charTransform, Inventory inventory, PickupIndex pickupIndex)
 		{
-			if (pickupIndex.equipmentIndex != EquipmentIndex.None)
+			if (PickupCatalog.GetPickupDef(pickupIndex).equipmentIndex != EquipmentIndex.None)
 			{
-				if (inventory.GetEquipmentIndex() != pickupIndex.equipmentIndex)
+				if (inventory.GetEquipmentIndex() != PickupCatalog.GetPickupDef(pickupIndex).equipmentIndex)
 				{
 					return;
 				}
@@ -68,12 +68,12 @@ namespace DropItems
 			}
 			else
 			{
-				if (inventory.GetItemCount(pickupIndex.itemIndex) <= 0) 
+				if (inventory.GetItemCount(PickupCatalog.GetPickupDef(pickupIndex).itemIndex) <= 0) 
 				{
 					return;
 				}
 
-				inventory.RemoveItem(pickupIndex.itemIndex, 1);
+				inventory.RemoveItem(PickupCatalog.GetPickupDef(pickupIndex).itemIndex, 1);
 			}
 
 			PickupDropletController.CreatePickupDroplet(pickupIndex,
@@ -82,13 +82,13 @@ namespace DropItems
 
 		public static void CreateNotification(CharacterBody character, Transform transform, PickupIndex pickupIndex)
 		{
-			if (pickupIndex.equipmentIndex != EquipmentIndex.None)
+			if (PickupCatalog.GetPickupDef(pickupIndex).equipmentIndex != EquipmentIndex.None)
 			{
-				CreateNotification(character, transform, pickupIndex.equipmentIndex);
+				CreateNotification(character, transform, PickupCatalog.GetPickupDef(pickupIndex).equipmentIndex);
 			} 
 			else
 			{
-				CreateNotification(character, transform, pickupIndex.itemIndex);
+				CreateNotification(character, transform, PickupCatalog.GetPickupDef(pickupIndex).itemIndex);
 			}
 		}
 
