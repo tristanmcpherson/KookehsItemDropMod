@@ -9,7 +9,8 @@ using UnityEngine;
 
 namespace DropItems
 {
-	[BepInDependency("com.bepis.r2api")]
+	[BepInDependency(R2API.R2API.PluginGUID)]
+	[BepInDependency(MiniRpcPlugin.Dependency)]
 	[BepInPlugin(ModGuid, ModName, ModVersion)]
 	[R2APISubmoduleDependency("InventoryAPI")]
 	public class KookehsDropItemMod : BaseUnityPlugin

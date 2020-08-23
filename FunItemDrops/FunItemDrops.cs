@@ -85,7 +85,6 @@ namespace FunItemDrops
 			On.RoR2.UserProfile.HasUnlockable_string += (orig, self, achievementName) => true;
 
 
-			//ItemDropAPI.ChestSpawnRate = 2f;
 		}
 
 		private static int i = 0;
@@ -103,8 +102,9 @@ namespace FunItemDrops
 
 				var item = ItemIndex.BoostHp;
 
-				var items = new List<PickupIndex>();
-				items.Add(new PickupIndex(item)); // item that hasnt an actual prefab (default to exclamation mark) so fairly easy to recognize if it drops
+				var items = new List<PickupIndex> {
+					PickupCatalog.FindPickupIndex(item) // item that hasnt an actual prefab (default to exclamation mark) so fairly easy to recognize if it drops
+				};
 				//ItemDropAPI.AddDrops(ItemDropLocation.LargeChest, items.ToSelection());
 
 				var trans = PlayerCharacterMasterController.instances[0].master.GetBodyObject().transform;

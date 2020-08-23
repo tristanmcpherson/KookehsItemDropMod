@@ -28,13 +28,17 @@ namespace DropItems
 				// Client, send command
 				DropItemMessage itemDropMessage;
 				if (EquipmentIcon)
-				{
+				{	
 					var equipmentIndex = inventory.GetEquipmentIndex();
 					itemDropMessage = new DropItemMessage(equipmentIndex);
 				}
 				else
 				{
 					var itemIndex = GetItemIndex();
+					if (ItemCatalog.GetItemDef(itemIndex).tier == ItemTier.NoTier) {
+						return;
+					}
+
 					itemDropMessage = new DropItemMessage(itemIndex);
 				}
 
