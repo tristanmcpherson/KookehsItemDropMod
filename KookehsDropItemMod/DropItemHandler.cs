@@ -1,5 +1,7 @@
 ﻿using System;
 using R2API;
+using R2API.Networking;
+using R2API.Networking.Interfaces;
 using R2API.Utils;
 using RoR2;
 using UnityEngine;
@@ -18,6 +20,8 @@ namespace DropItems
 		{
 			var inventory = GetInventory();
 
+			KookehsDropItemMod.Logger.LogDebug("KDI: Pointer click, trying to send network message");
+
 			if (!inventory.hasAuthority)
 			{
 				return;
@@ -26,11 +30,15 @@ namespace DropItems
 			if (!NetworkServer.active)
 			{
 				// Client, send command
+				var body = inventory.GetComponent<CharacterMaster>().GetBody();
+				var identity = body.gameObject.GetComponent<NetworkIdentity>();
+
+
 				DropItemMessage itemDropMessage;
 				if (EquipmentIcon)
 				{	
 					var equipmentIndex = inventory.GetEquipmentIndex();
-					itemDropMessage = new DropItemMessage(equipmentIndex);
+					itemDropMessage = new DropItemMessage(identity.netId, equipmentIndex);
 				}
 				else
 				{
@@ -39,12 +47,13 @@ namespace DropItems
 						return;
 					}
 
-					itemDropMessage = new DropItemMessage(itemIndex);
+					itemDropMessage = new DropItemMessage(identity.netId, itemIndex);
 				}
 
-				KookehsDropItemMod.DropItemCommand.Invoke(itemDropMessage);
-			} 
-			else
+				KookehsDropItemMod.Logger.LogDebug("KDI Sending network message");
+
+				itemDropMessage.Send(NetworkDestination.Server);
+			} else
 			{
 				// Server, execute command
 				var characterBody = inventory.GetComponent<CharacterMaster>().GetBody();
@@ -101,7 +110,7 @@ namespace DropItems
 			var equipmentDef = EquipmentCatalog.GetEquipmentDef(equipmentIndex);
 			const string title = "Equipment dropped";
 			var description = Language.GetString(equipmentDef.nameToken);
-			var texture = Resources.Load<Texture>(equipmentDef.pickupIconPath);
+			var texture = equipmentDef.pickupIconTexture;
 
 			CreateNotification(character, transform, title, description, texture);
 		}
@@ -111,7 +120,7 @@ namespace DropItems
 			var itemDef = ItemCatalog.GetItemDef(itemIndex);
 			const string title = "Item dropped";
 			var description = Language.GetString(itemDef.nameToken);
-			var texture = Resources.Load<Texture>(itemDef.pickupIconPath);
+			var texture = itemDef.pickupIconTexture;
 
 			CreateNotification(character, transform, title, description, texture);
 		}
