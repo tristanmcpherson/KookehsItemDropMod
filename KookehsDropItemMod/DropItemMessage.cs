@@ -41,8 +41,8 @@ namespace DropItems
 		public void Deserialize(NetworkReader reader)
 		{
 			NetId = reader.ReadNetworkId();
-			var index = reader.ReadInt32();
-			IsItem = reader.ReadBoolean();
+            IsItem = reader.ReadBoolean();
+            var index = reader.ReadInt32();
 
 			if (IsItem)
 			{
