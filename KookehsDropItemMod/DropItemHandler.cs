@@ -1,5 +1,4 @@
 ﻿using System;
-using KookehsDropItemMod;
 using R2API;
 using R2API.Networking;
 using R2API.Networking.Interfaces;

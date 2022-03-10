@@ -1,7 +1,7 @@
 ﻿using R2API;
 using UnityEngine;
 
-namespace KookehsDropItemMod
+namespace DropItems
 {
     public class DropItemNotification : MonoBehaviour
     {
