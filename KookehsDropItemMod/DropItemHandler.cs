@@ -126,13 +126,14 @@ namespace DropItems
 		}
 
 		private static void CreateNotification(CharacterBody character, Transform transform, string title, string description, Texture texture)
-		{
-			var notification = character.gameObject.AddComponent<Notification>();
-			notification.transform.SetParent(transform);
-			notification.SetPosition(new Vector3((float)(Screen.width * 0.8), (float)(Screen.height * 0.25), 0));
-			notification.SetIcon(texture);
-			notification.GetTitle = () => title;
-			notification.GetDescription = () => description;
-		}
+        {
+            var notification = character.gameObject.GetComponent<DropItemNotification>();
+            if (notification == null)
+            {
+                notification = character.gameObject.AddComponent<DropItemNotification>();
+                notification.transform.SetParent(transform);
+			}
+            notification.SetNotification(title, description, texture);
+        }
 	}
 }
