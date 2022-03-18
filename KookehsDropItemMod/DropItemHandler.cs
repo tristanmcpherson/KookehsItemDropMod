@@ -12,64 +12,47 @@ namespace DropItems
 {
 	public class DropItemHandler : MonoBehaviour, IPointerClickHandler
 	{
-		public Func<ItemIndex> GetItemIndex { get; set; }
-		public Func<Inventory> GetInventory { get; set; }
-		public bool EquipmentIcon { get; set; }
+        private Func<CharacterMaster> getMaster;
+        private Func<PickupIndex> getPickupIndex;
+
+        public void SetData(Func<CharacterMaster> getMaster, Func<PickupIndex> getPickupIndex) {
+            this.getMaster = getMaster;
+            this.getPickupIndex = getPickupIndex;
+        }
 
 		public void OnPointerClick(PointerEventData eventData)
 		{
-			var inventory = GetInventory();
-
 			KookehsDropItemMod.Logger.LogDebug("KDI: Pointer click, trying to send network message");
+			var master = getMaster();
 
-			if (!inventory.hasAuthority)
+			if (!master.inventory.hasAuthority)
 			{
 				return;
 			}
 
-			if (!NetworkServer.active)
-			{
-				// Client, send command
-				var body = inventory.GetComponent<CharacterMaster>().GetBody();
-				var identity = body.gameObject.GetComponent<NetworkIdentity>();
+			var pickupIndex = getPickupIndex();
+			var identity = master.GetBody().gameObject.GetComponent<NetworkIdentity>();
+			var pickupDef = PickupCatalog.GetPickupDef(pickupIndex);
 
+			if (pickupDef.itemIndex != ItemIndex.None) {
+				if (ItemCatalog.GetItemDef(pickupDef.itemIndex).tier == ItemTier.NoTier) {
+					return;
+                }
+            }
 
-				DropItemMessage itemDropMessage;
-				if (EquipmentIcon)
-				{	
-					var equipmentIndex = inventory.GetEquipmentIndex();
-					itemDropMessage = new DropItemMessage(identity.netId, equipmentIndex);
-				}
-				else
-				{
-					var itemIndex = GetItemIndex();
-					if (ItemCatalog.GetItemDef(itemIndex).tier == ItemTier.NoTier) {
-						return;
-					}
+			KookehsDropItemMod.Logger.LogDebug("KDI: Sending network message");
 
-					itemDropMessage = new DropItemMessage(identity.netId, itemIndex);
-				}
-
-				KookehsDropItemMod.Logger.LogDebug("KDI Sending network message");
-
-				itemDropMessage.Send(NetworkDestination.Server);
-			} else
-			{
-				// Server, execute command
-				var characterBody = inventory.GetComponent<CharacterMaster>().GetBody();
-				var charTransform = characterBody.GetFieldValue<Transform>("transform");
-
-				var pickupIndex = EquipmentIcon 
-					? PickupCatalog.FindPickupIndex(inventory.GetEquipmentIndex()) 
-					: PickupCatalog.FindPickupIndex(GetItemIndex());
-
-				DropItem(charTransform, inventory, pickupIndex);
-				CreateNotification(characterBody, charTransform, pickupIndex);
-			}
+            DropItemMessage itemDropMessage = new DropItemMessage(identity.netId, pickupIndex);
+			itemDropMessage.Send(NetworkDestination.Server);
 		}
 
 		public static void DropItem(Transform charTransform, Inventory inventory, PickupIndex pickupIndex)
 		{
+			KookehsDropItemMod.Logger.LogDebug("Transform: " + charTransform.position.ToString());
+			KookehsDropItemMod.Logger.LogDebug("Inventory: " + inventory.name);
+			KookehsDropItemMod.Logger.LogDebug("Pickup Index: " + pickupIndex);
+
+
 			if (PickupCatalog.GetPickupDef(pickupIndex).equipmentIndex != EquipmentIndex.None)
 			{
 				if (inventory.GetEquipmentIndex() != PickupCatalog.GetPickupDef(pickupIndex).equipmentIndex)

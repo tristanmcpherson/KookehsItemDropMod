@@ -13,7 +13,7 @@ namespace DropItems
 {
     [BepInDependency(R2API.R2API.PluginGUID)]
 	[BepInPlugin(ModGuid, ModName, ModVersion)]
-	[R2APISubmoduleDependency(nameof(NetworkingAPI))]
+	[R2APISubmoduleDependency(nameof(NetworkingAPI), nameof(CommandHelper))]
 	public class KookehsDropItemMod : BaseUnityPlugin
 	{
 		public static GameObject RootObject { get; set; }
@@ -32,7 +32,7 @@ namespace DropItems
 		{
 			Logger = base.Logger;
 			NetworkingAPI.RegisterMessageType<DropItemMessage>();
-			
+
 			IL.RoR2.UI.ItemInventoryDisplay.AllocateIcons += OnItemIconAddedHook;
 			IL.RoR2.UI.ScoreboardStrip.SetMaster += OnEquipmentIconAddedHook;
 
@@ -40,18 +40,23 @@ namespace DropItems
 			DontDestroyOnLoad(RootObject);
 			DropItemHandler = RootObject.AddComponent<DropItemHandler>();
 
+			CommandHelper.AddToConsoleWhenReady();
+
 			OnItemIconAdded += (itemIcon) => {
 				if (itemIcon.GetComponent<DropItemHandler>() != null) return;
+
+				Func<CharacterMaster> getCharacterMaster = () => itemIcon.rectTransform.parent.GetComponent<ItemInventoryDisplay>().GetFieldValue<Inventory>("inventory").GetComponent<CharacterMaster>();
+
+
 				var dropItemHandler = itemIcon.transform.gameObject.AddComponent<DropItemHandler>();
-				dropItemHandler.GetItemIndex = () => itemIcon.GetFieldValue<ItemIndex>("itemIndex");
-				dropItemHandler.GetInventory = () => itemIcon.rectTransform.parent.GetComponent<ItemInventoryDisplay>().GetFieldValue<Inventory>("inventory");
+				dropItemHandler.SetData(getCharacterMaster, () => PickupCatalog.FindPickupIndex(itemIcon.GetFieldValue<ItemIndex>("itemIndex")));
 			};
 
 			OnEquipmentIconAdded += (equipmentIcon) => {
 				if (equipmentIcon.GetComponent<DropItemHandler>() != null) return;
+
 				var dropItemHandler = equipmentIcon.transform.gameObject.AddComponent<DropItemHandler>();
-				dropItemHandler.GetInventory = () => equipmentIcon.targetInventory;
-				dropItemHandler.EquipmentIcon = true;
+				dropItemHandler.SetData(() => equipmentIcon.targetInventory.GetComponent<CharacterMaster>(), () => PickupCatalog.FindPickupIndex(equipmentIcon.targetInventory.GetEquipmentIndex()));
 			};
 		}
 
@@ -75,7 +80,7 @@ namespace DropItems
 			cursor.Emit(OpCodes.Ldarg_0);
 
 			cursor.EmitDelegate<Action<ScoreboardStrip>>(eq => {
-				if (eq.equipmentIcon != null) {
+				if (eq != null && eq.equipmentIcon != null) {
 					OnEquipmentIconAdded?.Invoke(eq.equipmentIcon);
 				}
 			});

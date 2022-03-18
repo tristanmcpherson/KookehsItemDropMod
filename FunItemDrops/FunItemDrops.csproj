@@ -5,8 +5,14 @@
 	</PropertyGroup>
 
 	<ItemGroup>
+		<Reference Include="HGCSharpUtils">
+		  <HintPath>D:\Games\SteamLibrary\steamapps\common\Risk of Rain 2\Risk of Rain 2_Data\Managed\HGCSharpUtils.dll</HintPath>
+		</Reference>
+		<Reference Include="HGUnityUtils">
+		  <HintPath>D:\Games\SteamLibrary\steamapps\common\Risk of Rain 2\Risk of Rain 2_Data\Managed\HGUnityUtils.dll</HintPath>
+		</Reference>
 		<Reference Include="MMHOOK_Assembly-CSharp">
-		  <HintPath>..\..\R2API\R2API\bin\Debug\netstandard2.0\MMHOOK_Assembly-CSharp.dll</HintPath>
+		  <HintPath>..\libs\MMHOOK_Assembly-CSharp.dll</HintPath>
 		</Reference>
 		<Reference Include="R2API">
 			<HintPath>..\..\R2API\R2API\bin\Debug\netstandard2.0\R2API.dll</HintPath>

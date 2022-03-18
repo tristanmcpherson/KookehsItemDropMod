@@ -8,53 +8,31 @@ namespace DropItems
 {
 	public class DropItemMessage : INetMessage
 	{
-		public bool IsItem;
-		private NetworkInstanceId NetId;
-		private ItemIndex ItemIndex = ItemIndex.None;
-		private EquipmentIndex EquipmentIndex = EquipmentIndex.None;
+		private NetworkInstanceId netId;
+		private PickupIndex pickupIndex;
 
         public DropItemMessage() {
         }
 
-		public DropItemMessage(NetworkInstanceId netId, ItemIndex itemIndex)
+		public DropItemMessage(NetworkInstanceId netId, PickupIndex pickupIndex)
 		{
-			NetId = netId;
-			ItemIndex = itemIndex;
-			IsItem = true;
-		}
-
-		public DropItemMessage(NetworkInstanceId netId, EquipmentIndex equipmentIndex)
-		{
-			NetId = netId;
-			EquipmentIndex = equipmentIndex;
-			IsItem = false;
+			this.netId = netId;
+			this.pickupIndex = pickupIndex;
 		}
 
 		public void Serialize(NetworkWriter writer)
 		{
-			var isItem = (ItemIndex != ItemIndex.None);
-			writer.Write(NetId);
-			writer.Write(isItem);
-			writer.Write(isItem ? (int)ItemIndex : (int)EquipmentIndex);
+			writer.Write(netId);
+			PickupIndex.WriteToNetworkWriter(writer, pickupIndex);
 		}
 
 		public void Deserialize(NetworkReader reader)
 		{
-			NetId = reader.ReadNetworkId();
-			var index = reader.ReadInt32();
-			IsItem = reader.ReadBoolean();
-
-			if (IsItem)
-			{
-				ItemIndex = (ItemIndex) index;
-			}
-			else
-			{
-				EquipmentIndex = (EquipmentIndex) index;
-			}
+			netId = reader.ReadNetworkId();
+			pickupIndex = reader.ReadPickupIndex();
 		}
 
-		public override string ToString() => $"DropItemMessage: {(IsItem ? ItemIndex.ToString() : EquipmentIndex.ToString())}";
+		public override string ToString() => $"DropItemMessage: {pickupIndex}";
 
 		private void Log(string message) {
 			KookehsDropItemMod.Logger.LogDebug(message);
@@ -66,19 +44,16 @@ namespace DropItems
             }
 
 			Log("Received kookeh drop message");
-			Log(NetId.ToString());
+			Log("NetworkID" + netId.ToString());
+            Log("PickupIndex" + this.pickupIndex.ToString());
 
-			
-			var bodyObject = Util.FindNetworkObject(NetId);
+			var bodyObject = Util.FindNetworkObject(netId);
 
-			var body = bodyObject.GetComponentInParent<CharacterBody>();
+			var body = bodyObject.GetComponent<CharacterBody>();
+			Log("Body is null: " + (body == null).ToString());
 
 			var inventory = body.master.inventory;
 			var charTransform = body.GetFieldValue<Transform>("transform");
-
-			var pickupIndex = IsItem
-				? PickupCatalog.FindPickupIndex(ItemIndex)
-				: PickupCatalog.FindPickupIndex(EquipmentIndex);
 
 			DropItemHandler.DropItem(charTransform, inventory, pickupIndex);
 			DropItemHandler.CreateNotification(body, charTransform, pickupIndex);

@@ -5,8 +5,8 @@
   </PropertyGroup>
 
 	<ItemGroup>
-		<Reference Include="MMHOOK_Assembly-CSharp">
-		  <HintPath>..\libs\MMHOOK_Assembly-CSharp.dll</HintPath>
+		<Reference Include="MMHOOK_RoR2">
+		  <HintPath>..\libs\MMHOOK_RoR2.dll</HintPath>
 		</Reference>
 		<Reference Include="Mono.Cecil">
 		  <HintPath>..\libs\Mono.Cecil.dll</HintPath>
@@ -18,10 +18,18 @@
 			<HintPath>..\..\R2API\R2API\bin\Debug\netstandard2.0\R2API.dll</HintPath>
 			<Private>false</Private>
 		</Reference>
-	  <Reference Include="Assembly-CSharp">
-	    <HintPath>..\libs\Assembly-CSharp.dll</HintPath>
+    <Reference Include="com.unity.multiplayer-hlapi.Runtime">
+      <HintPath>..\libs\com.unity.multiplayer-hlapi.Runtime.dll</HintPath>
+      <Private>false</Private>
+    </Reference>
+	  <Reference Include="RoR2">
+	    <HintPath>..\libs\RoR2.dll</HintPath>
 	    <Private>false</Private>
 	  </Reference>
+    <Reference Include="HGCSharpUtils">
+      <HintPath>..\libs\HGCSharpUtils.dll</HintPath>
+      <Private>false</Private>
+    </Reference>
 	  <Reference Include="BepInEx">
 	    <HintPath>..\libs\BepInEx.dll</HintPath>
 			<Private>false</Private>
@@ -32,7 +40,8 @@
 		</Reference>
 		<Reference Include="UnityEngine.Networking">
 			<HintPath>..\libs\UnityEngine.Networking.dll</HintPath>
-			<Private>false</Private>		</Reference>
+			<Private>false</Private>		
+    </Reference>
 		<Reference Include="UnityEngine.UI">
 			<HintPath>..\libs\UnityEngine.UI.dll</HintPath>
 			<Private>false</Private>
@@ -53,6 +62,6 @@
 	</ItemGroup>
 
 	<Target Name="PostBuild" AfterTargets="PostBuildEvent">
-		<Exec Command="copy /Y &quot;$(TargetDir)$(ProjectName).dll&quot; &quot;D:\Games\SteamLibrary\steamapps\common\Risk of Rain 2\BepInEx\plugins\$(ProjectName).dll&quot;&#xD;&#xA;" />
+		<Exec Command="copy /Y &quot;$(TargetDir)$(ProjectName).dll&quot; &quot;C:\Users\Tristan\AppData\Roaming\r2modmanPlus-local\RiskOfRain2\profiles\GokuTest\BepInEx\plugins\$(ProjectName).dll&quot;&#xD;&#xA;" />
 	</Target>
 </Project>

@@ -83,8 +83,14 @@ namespace FunItemDrops
 			On.RoR2.UserProfile.HasViewedViewable += (orig, self, achievementName) => true;
 			On.RoR2.UserProfile.HasUnlockable_UnlockableDef += (orig, self, achievementName) => true;
 			On.RoR2.UserProfile.HasUnlockable_string += (orig, self, achievementName) => true;
+			
 
+			On.RoR2.UserAchievementManager.GetAchievementProgress += UserAchievementManager_GetAchievementProgress;
+			
+		}
 
+		private float UserAchievementManager_GetAchievementProgress(On.RoR2.UserAchievementManager.orig_GetAchievementProgress orig, UserAchievementManager self, AchievementDef achievementDef) {
+			return 1.0f;
 		}
 
 		private static int i = 0;
@@ -100,7 +106,7 @@ namespace FunItemDrops
 			{
 				PlayerCharacterMasterController.instances[0].master.GiveMoney(10000);
 
-				var item = ItemIndex.BoostHp;
+				var item = PickupCatalog.GetPickupDef(new PickupIndex(ItemIndex.None));
 
 				var items = new List<PickupIndex> {
 					PickupCatalog.FindPickupIndex(item) // item that hasnt an actual prefab (default to exclamation mark) so fairly easy to recognize if it drops
