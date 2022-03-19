@@ -8,3 +8,4 @@ Allows players to drop their own items out of their inventories to trade with fr
 - 2.1.0 - Updated for RoR2 1.0, fix so items with no tier can't be dropped
 - 2.2.0 - Updated for the Anniversary Update
 - 2.3.x - Updated for DLC patch
+- 2.3.2 - Fixed NullReferenceException spam

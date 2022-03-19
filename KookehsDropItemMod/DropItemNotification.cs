@@ -17,6 +17,7 @@ namespace DropItems
                 if (Run.instance.fixedTime - startTime > duration)
                 {
                     Destroy(notification);
+                    Destroy(this);
                 }
             }
 
