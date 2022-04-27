@@ -35,7 +35,8 @@ namespace DropItems
 			var pickupDef = PickupCatalog.GetPickupDef(pickupIndex);
 
 			if (pickupDef.itemIndex != ItemIndex.None) {
-				if (ItemCatalog.GetItemDef(pickupDef.itemIndex).tier == ItemTier.NoTier) {
+				
+				if (!ItemTierCatalog.GetItemTierDef(pickupDef.itemTier).isDroppable) {
 					return;
                 }
             }

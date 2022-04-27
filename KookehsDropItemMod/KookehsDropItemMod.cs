@@ -21,7 +21,7 @@ namespace DropItems
 
 		private const string ModGuid = "KookehsDropItemMod";
 		private const string ModName = "Kookeh's Drop Item Mod";
-		private const string ModVersion = "2.3.1";
+		private const string ModVersion = "2.3.4";
 
 		public static event Action<ItemIcon> OnItemIconAdded;
 		public static event Action<EquipmentIcon> OnEquipmentIconAdded;
@@ -46,7 +46,6 @@ namespace DropItems
 				if (itemIcon.GetComponent<DropItemHandler>() != null) return;
 
 				Func<CharacterMaster> getCharacterMaster = () => itemIcon.rectTransform.parent.GetComponent<ItemInventoryDisplay>().GetFieldValue<Inventory>("inventory").GetComponent<CharacterMaster>();
-
 
 				var dropItemHandler = itemIcon.transform.gameObject.AddComponent<DropItemHandler>();
 				dropItemHandler.SetData(getCharacterMaster, () => PickupCatalog.FindPickupIndex(itemIcon.GetFieldValue<ItemIndex>("itemIndex")));

@@ -1,9 +1,9 @@
 ﻿{
 	"name": "KookehsDropItem_BepInEx",
-	"version_number": "2.3.2",
+	"version_number": "2.3.4",
 	"website_url": "https://github.com/tristanmcpherson/KookehsItemDropMod",
 	"description": "Kookeh's Drop Item Mod ported to BepInEx and R2API",
 	"dependencies": [
-		"tristanmcpherson-R2API-4.0.11"
+		"tristanmcpherson-R2API-4.3.21"
 	]
 }

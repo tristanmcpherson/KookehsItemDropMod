@@ -11,9 +11,8 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="BepInEx.Core" Version="6.0.0-be.552" />
-    <PackageReference Include="BepInEx.Unity" Version="6.0.0-be.552" />
-    <PackageReference Include="RiskOfRain2.GameLibs" Version="1.2.2-r.0" />
+    <PackageReference Include="BepInEx.Core" Version="5.4.19" />
+    <PackageReference Include="RiskOfRain2.GameLibs" Version="1.2.3.1-r.0" />
     <PackageReference Include="R2API" Version="4.1.8" />
   </ItemGroup>
 
